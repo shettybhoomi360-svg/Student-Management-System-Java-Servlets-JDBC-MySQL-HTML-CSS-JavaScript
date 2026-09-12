@@ -1,0 +1,1 @@
+Student Management System, which is a web-based application for managing student records. I developed the frontend using HTML, CSS, and JavaScript, and used Java Servlets with JDBC for the backend and MySQL for storing the data. The main features are adding, viewing, updating, and deleting student records, and the application runs on Apache Tomcat.
