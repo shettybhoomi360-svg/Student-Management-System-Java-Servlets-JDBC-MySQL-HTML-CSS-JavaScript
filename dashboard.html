@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                🎓
+                <div>
+                    <strong>SMS</strong>
+                    <small>Student Management System</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="menu-item active">
+                    🏠 <span>Dashboard</span>
+                </a>
+
+                <a href="students.html" class="menu-item">
+                    👥 <span>Students</span>
+                </a>
+
+                <a href="add-student.html" class="menu-item">
+                    👤 <span>Add Student</span>
+                </a>
+
+                <a href="courses.html" class="menu-item">
+              📚 <span>Courses</span>
+                 </a>
+
+                <a href="departments.html" class="menu-item">
+                    🏛️ <span>Departments</span>
+                </a>
+
+                <a href="report.html" class="menu-item">
+                    📊 <span>Reports</span>
+                </a>
+
+                <a href="profile.html" class="menu-item">
+                    👨 <span>Profile</span>
+                </a>
+
+                <a href="index.html" class="menu-item logout">
+                    🚪 <span>Logout</span>
+                </a>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+                🎓📚
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <!-- TOP BAR -->
+            <header class="topbar">
+
+                <div class="topbar-left">
+            <button class="hamburger" onclick="toggleSidebar()">☰</button>
+
+                    <h2>Dashboard</h2>
+                </div>
+
+                <div class="admin">
+                    🔔
+                    <span>👩🏻</span>
+                    <strong>Admin</strong>
+                    <span>⌄</span>
+                </div>
+
+            </header>
+
+
+            <!-- CONTENT -->
+            <section class="dashboard-content">
+
+                <h1>Dashboard</h1>
+
+                <p class="welcome-message">
+                    Welcome to the Student Management System
+                </p>
+
+
+                <!-- STAT CARDS -->
+                <div class="stat-cards">
+
+                    <div class="stat-card students-card">
+                        <div class="stat-icon">👥</div>
+
+                        <div>
+                            <p>Total Students</p>
+                            <h2><span id="totalStudents">0</span></h2>
+                            <small>↑ +12 this month</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card courses-card">
+                        <div class="stat-icon">📖</div>
+
+                        <div>
+                            <p>Total Courses</p>
+                            <h2>4</h2>
+                            <small>↑ +2 this month</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card department-card">
+                        <div class="stat-icon">🏛️</div>
+
+                        <div>
+                            <p>Departments</p>
+                            <h2>3</h2>
+                            <small>No change</small>
+                        </div>
+                    </div>
+
+
+                    <div class="stat-card users-card">
+                        <div class="stat-icon">📊</div>
+
+                        <div>
+                            <p>Total Users</p>
+                            <h2>6</h2>
+                            <small>↑ +1 this month</small>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- LOWER SECTION -->
+                <div class="dashboard-grid">
+
+                    <!-- OVERVIEW -->
+                    <div class="overview-box">
+
+                        <div class="box-header">
+                            <h3>Overview</h3>
+
+                            <select>
+                                <option>This Year</option>
+                                <option>This Month</option>
+                                <option>This Week</option>
+                            </select>
+                        </div>
+
+                        <div class="chart">
+
+                            <div class="chart-line">
+                                ╱╲
+                            </div>
+
+                            <div class="chart-values">
+                                <span>100</span>
+                                <span>80</span>
+                                <span>60</span>
+                                <span>40</span>
+                                <span>20</span>
+                                <span>0</span>
+                            </div>
+
+                            <div class="chart-placeholder">
+    <div class="bar-chart">
+        <div class="bar" style="height: 40%;"></div>
+        <div class="bar" style="height: 65%;"></div>
+        <div class="bar" style="height: 50%;"></div>
+        <div class="bar" style="height: 80%;"></div>
+        <div class="bar" style="height: 60%;"></div>
+        <div class="bar" style="height: 90%;"></div>
+    </div>
+</div>
+
+                            <div class="months">
+                                <span>Jan</span>
+                                <span>Feb</span>
+                                <span>Mar</span>
+                                <span>Apr</span>
+                                <span>May</span>
+                                <span>Jun</span>
+                                <span>Jul</span>
+                                <span>Aug</span>
+                                <span>Sep</span>
+                                <span>Oct</span>
+                                <span>Nov</span>
+                                <span>Dec</span>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECENT STUDENTS -->
+                    <div class="recent-box">
+
+                        <div class="box-header">
+                            <h3>Recent Students</h3>
+                        </div>
+
+                        <a href="students.html" class="view-button">
+                        View All Students
+                       </a>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+<script>
+let students = JSON.parse(localStorage.getItem("students")) || [];
+
+document.getElementById("totalStudents").textContent = students.length;
+
+const recentStudents = document.getElementById("recentStudents");
+
+students.slice(-4).reverse().forEach(function(student) {
+
+    const row = document.createElement("div");
+
+    row.className = "student-row";
+
+    row.innerHTML = `
+        <span class="student-avatar">👤</span>
+        <strong>${student.name}</strong>
+        <span>${student.course}</span>
+        <small>Recently added</small>
+    `;
+
+    recentStudents.appendChild(row);
+});
+
+function toggleSidebar() {
+    document.querySelector(".dashboard-container")
+        .classList.toggle("sidebar-hidden");
+}
+</script>
+</body>
+</html>

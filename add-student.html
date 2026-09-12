@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Student - Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                🎓
+                <div>
+                    <strong>SMS</strong>
+                    <small>Student Management System</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="menu-item">
+                    🏠 <span>Dashboard</span>
+                </a>
+
+                <a href="students.html" class="menu-item">
+                    👥 <span>Students</span>
+                </a>
+
+                <a href="add-student.html" class="menu-item active">
+                    👤 <span>Add Student</span>
+                </a>
+
+                <a href="courses.html" class="menu-item">
+                    📚 <span>Courses</span>
+                </a>
+
+                <a href="departments.html" class="menu-item">
+                    🏛️ <span>Departments</span>
+                </a>
+
+                <a href="report.html" class="menu-item">
+                    📊 <span>Reports</span>
+                </a>
+
+                <a href="profile.html" class="menu-item">
+                    👨 <span>Profile</span>
+                </a>
+
+                <a href="index.html" class="menu-item logout">
+                    🚪 <span>Logout</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+        <main class="dashboard-main">
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+                    <span class="hamburger">☰</span>
+                    <h2>Add Student</h2>
+                </div>
+
+                <div class="admin">
+                    🔔
+                    <span>👩🏻</span>
+                    <strong>Admin</strong>
+                    <span>⌄</span>
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-content">
+
+                <h1>Add Student</h1>
+
+                <p class="welcome-message">
+                    Enter student details below
+                </p>
+
+
+                <!-- ADD STUDENT FORM -->
+
+                <div class="add-student-box">
+
+                    <form>
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label>Student Name</label>
+                                <input type="text" placeholder="Enter student name">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" placeholder="Enter email">
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label>Course</label>
+
+                                <select>
+                                    <option>Select Course</option>
+                                    <option>BCA</option>
+                                    <option>B.Sc. CS</option>
+                                    <option>BBA</option>
+                                    <option>B.Com</option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Department</label>
+
+                                <select>
+                                    <option>Select Department</option>
+                                    <option>Computer Science</option>
+                                    <option>Management</option>
+                                    <option>Commerce</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-row">
+
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <input type="text" placeholder="Enter phone number">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Student ID</label>
+                                <input type="text" placeholder="Enter student ID">
+                            </div>
+
+                        </div>
+
+
+                        <button type="submit" class="save-student-btn">
+                            Save Student
+                        </button>
+
+                        <a href="students.html" class="cancel-btn">
+                            Cancel
+                        </a>
+
+                    </form>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+<script>
+document.querySelector("form").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const name = document.querySelector('input[placeholder="Enter student name"]').value;
+    const email = document.querySelector('input[placeholder="Enter email"]').value;
+    const course = document.querySelectorAll("select")[0].value;
+    const department = document.querySelectorAll("select")[1].value;
+    const phone = document.querySelector('input[placeholder="Enter phone number"]').value;
+    const studentId = document.querySelector('input[placeholder="Enter student ID"]').value;
+
+    if (
+        name === "" ||
+        email === "" ||
+        course === "Select Course" ||
+        department === "Select Department" ||
+        phone === "" ||
+        studentId === ""
+    ) {
+        alert("Please fill all the fields.");
+        return;
+    }
+
+    const student = {
+        studentId: studentId,
+        name: name,
+        email: email,
+        course: course,
+        department: department,
+        phone: phone
+    };
+
+    try {
+
+        const response = await fetch(
+            "http://localhost:8080/student-mgmt-system/students",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(student)
+            }
+        );
+
+        if (response.ok) {
+            alert("Student added successfully!");
+            window.location.href = "students.html";
+        } else {
+            alert("Failed to add student.");
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert("Could not connect to Java backend.");
+    }
+
+});
+</script>

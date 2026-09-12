@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Reports - Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                🎓
+                <div>
+                    <strong>SMS</strong>
+                    <small>Student Management System</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="menu-item">
+                    🏠 <span>Dashboard</span>
+                </a>
+
+                <a href="students.html" class="menu-item">
+                    👥 <span>Students</span>
+                </a>
+
+                <a href="add-student.html" class="menu-item">
+                    👤 <span>Add Student</span>
+                </a>
+
+                <a href="courses.html" class="menu-item">
+                    📚 <span>Courses</span>
+                </a>
+
+                <a href="departments.html" class="menu-item">
+                    🏛️ <span>Departments</span>
+                </a>
+
+                <a href="report.html" class="menu-item active">
+                    📊 <span>Reports</span>
+                </a>
+
+                <a href="profile.html" class="menu-item">
+                    👨 <span>Profile</span>
+                </a>
+
+                <a href="index.html" class="menu-item logout">
+                    🚪 <span>Logout</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+                    <span class="hamburger">☰</span>
+                    <h2>Reports</h2>
+                </div>
+
+                <div class="admin">
+                    🔔
+                    <span>👩🏻</span>
+                    <strong>Admin</strong>
+                    <span>⌄</span>
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-content">
+
+                <h1>Reports</h1>
+
+                <p class="welcome-message">
+                    View student management reports
+                </p>
+
+                <div class="report-grid">
+
+                    <div class="report-card">
+                        <div class="report-icon">👥</div>
+                        <h3>Total Students</h3>
+                        <h2 id="reportStudents">0</h2>
+                        <p>Registered students</p>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">📚</div>
+                        <h3>Total Courses</h3>
+                        <h2>4</h2>
+                        <p>Available courses</p>
+                    </div>
+
+                    <div class="report-card">
+                        <div class="report-icon">🏛️</div>
+                        <h3>Departments</h3>
+                        <h2>3</h2>
+                        <p>Academic departments</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script>
+        let students = JSON.parse(localStorage.getItem("students")) || [];
+
+        document.getElementById("reportStudents").textContent = students.length;
+    </script>
+
+</body>
+</html>

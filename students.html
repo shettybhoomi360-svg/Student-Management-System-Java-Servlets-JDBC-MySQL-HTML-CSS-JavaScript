@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Students - Student Management System</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="dashboard-body">
+
+    <div class="dashboard-container">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+
+            <div class="sidebar-logo">
+                🎓
+                <div>
+                    <strong>SMS</strong>
+                    <small>Student Management System</small>
+                </div>
+            </div>
+
+            <nav>
+
+                <a href="dashboard.html" class="menu-item">
+                    🏠 <span>Dashboard</span>
+                </a>
+
+                <a href="students.html" class="menu-item active">
+                    👥 <span>Students</span>
+                </a>
+
+                <a href="add-student.html" class="menu-item">
+                    👤 <span>Add Student</span>
+                </a>
+
+                <a href="#" class="menu-item">
+                    📚 <span>Courses</span>
+                </a>
+
+                <a href="departments.html" class="menu-item">
+                    🏛️ <span>Departments</span>
+                </a>
+
+                <a href="report.html" class="menu-item">
+                    📊 <span>Reports</span>
+                </a>
+
+                <a href="profile.html" class="menu-item">
+                    👨 <span>Profile</span>
+                </a>
+
+                <a href="index.html" class="menu-item logout">
+                    🚪 <span>Logout</span>
+                </a>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- MAIN CONTENT -->
+        <main class="dashboard-main">
+
+            <header class="topbar">
+
+                <div class="topbar-left">
+                    <span class="hamburger">☰</span>
+                    <h2>Students</h2>
+                </div>
+
+                <div class="admin">
+                    🔔
+                    <span>👩🏻</span>
+                    <strong>Admin</strong>
+                    <span>⌄</span>
+                </div>
+
+            </header>
+
+
+            <section class="dashboard-content">
+
+                <h1>Students</h1>
+
+                <p class="welcome-message">
+                    Manage all registered students
+                </p>
+
+
+                <!-- SEARCH AND ADD -->
+
+                <div class="student-actions">
+
+                    <input
+                        type="text"
+                        id="searchStudent"
+                        placeholder="🔍 Search students..."
+                    >
+
+                    <a href="add-student.html" class="add-student-btn">
+                        + Add Student
+                    </a>
+
+                </div>
+
+
+                <!-- STUDENT TABLE -->
+
+                <div class="students-table-box">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Course</th>
+                                <th>Department</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentTable">
+                            <tr>
+                                <td colspan="6">Loading students...</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+<script>
+
+const table = document.getElementById("studentTable");
+const searchInput = document.getElementById("searchStudent");
+
+let students = [];
+
+
+/* LOAD STUDENTS FROM JAVA BACKEND */
+
+async function loadStudents() {
+
+    try {
+
+        const response = await fetch("/student-mgmt-system/students");
+
+        if (!response.ok) {
+            throw new Error("Server returned an error");
+        }
+
+        students = await response.json();
+
+        displayStudents(students);
+
+    } catch (error) {
+
+        console.error("Error loading students:", error);
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    Failed to load students from database.
+                </td>
+            </tr>
+        `;
+    }
+}
+
+
+/* DISPLAY STUDENTS */
+
+function displayStudents(studentList) {
+
+    table.innerHTML = "";
+
+    if (studentList.length === 0) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="6">
+                    No students found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    studentList.forEach(function(student) {
+
+        const row = document.createElement("tr");
+
+        row.innerHTML = `
+            <td>${student.studentId}</td>
+            <td>${student.name}</td>
+            <td>${student.email}</td>
+            <td>${student.course}</td>
+            <td>${student.department}</td>
+            <td>
+                <button
+                    class="edit-btn"
+                    onclick="editStudent('${student.studentId}')">
+                    Edit
+                </button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteStudent('${student.studentId}')">
+                    Delete
+                </button>
+            </td>
+        `;
+
+        table.appendChild(row);
+
+    });
+}
+
+
+/* SEARCH */
+
+searchInput.addEventListener("input", function() {
+
+    const searchText = this.value.toLowerCase();
+
+    const filteredStudents = students.filter(function(student) {
+
+        return (
+            student.studentId.toLowerCase().includes(searchText) ||
+            student.name.toLowerCase().includes(searchText) ||
+            student.email.toLowerCase().includes(searchText) ||
+            student.course.toLowerCase().includes(searchText) ||
+            student.department.toLowerCase().includes(searchText)
+        );
+
+    });
+
+    displayStudents(filteredStudents);
+
+});
+
+
+/* TEMPORARY EDIT BUTTON */
+
+function editStudent(studentId) {
+
+    alert("Edit feature will be connected to MySQL next.\nStudent ID: " + studentId);
+
+}
+
+
+/* TEMPORARY DELETE BUTTON */
+
+function deleteStudent(studentId) {
+
+    alert("Delete feature will be connected to MySQL next.\nStudent ID: " + studentId);
+
+}
+
+
+/* START */
+
+loadStudents();
+
+</script>
+
+</body>
+</html>
